@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Rails SourceCode Reading #1</title>
+
+  <meta name="viewport" content="width=device-width"/>
+
+  <link rel="stylesheet" href="./css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src="./js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="./js/jquery-print.js"></script>
+  <script type="text/javascript" src="./js/jquery.batchImageLoad.js"></script>
+
+  <script type="text/javascript" src="./js/jquery.doubletap-0.1.js"></script>
+
+  <script type="text/javascript" src="./js/fg.menu.js"></script>
+  <script type="text/javascript" src="./js/showoff.js"></script>
+  <script type="text/javascript" src="./js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src="./js/sh_main.min.js"></script>
+  <script type="text/javascript" src="./js/core.js"></script>
+  <script type="text/javascript" src="./js/showoffcore.js"></script>
+  <script type="text/javascript" src="./js/coffee-script.js"></script>
+
+  <link type="text/css" href="./css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
+
+  
+    <link rel="stylesheet" href="file/extention.css" type="text/css"/>
+  
+
+  
+
+  <script type="text/javascript">
+  $(function(){
+      setupPreso(false, './');
+  });
+  </script>
+
+</head>
+
+<body>
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+
+<div id="help">
+  <table>
+    <tr><td class="key">z, ?</td><td>toggle help (this)</td></tr>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">shift-space, &larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">d</td><td>toggle debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c, t</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">n</td><td>toggle notes</td></tr>
+    <tr><td class="key">p</td><td>run preshow</td></tr>
+  </table>
+</div>
+
+<div class="buttonNav">
+  <input type="submit" onClick="prevStep();" value="prev"/>
+  <input type="submit" onClick="nextStep();" value="next"/>
+</div>
+
+<div id="preso">loading presentation...</div>
+<div id="footer">
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+  <span id="notesInfo"></span>
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div class="slide" data-transition="none"><div class="content" ref="one/01_slide/1">
+<h1>Rails SourceCode Reading #1</h1>
+
+<h2>ActiveRecord</h2>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline" ref="one/01_slide/2">
+<p>&#x4F8B;&#x3048;&#x3070;&#x3001;&#x6B21;&#x306E;&#x3088;&#x3046;&#x306A;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3092;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3068;...</p>
+
+<pre><code><code class="command">$ rails generate Page title:string</code>
+<code class="command">$ rake db:migrate</code>
+</code></pre>
+
+<p><code>Page</code>&#x30AF;&#x30E9;&#x30B9;&#x306B;<code>title</code>&#x3068;&#x3044;&#x3046;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x304C;&#x8FFD;&#x52A0;&#x3055;&#x308C;&#x308B;&#x3002;</p>
+
+<p>&#x3053;&#x306E;&#x8FBA;&#x306E;&#x4ED5;&#x7D44;&#x307F;&#x3092;&#x898B;&#x3066;&#x307F;&#x308B;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/3">
+<p>app/models/page.rb &#x3092;&#x898B;&#x3066;&#x307F;&#x308B;&#x3068;...</p>
+
+<pre class="sh_ruby"><code># app/models/page.rb
+class Page &lt; ActiveRecord::Base
+end</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="one/01_slide/4">
+<p>&#x3068;&#x3044;&#x3046;&#x308F;&#x3051;&#x3067;&#x3001;&#x3068;&#x308A;&#x3042;&#x3048;&#x305A; ActiveRecord &#x306E;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x53D6;&#x5F97;&#x3002;</p>
+
+<pre><code><code class="command">$ gem fetch activerecord</code>
+<code class="command">$ gem unpack activerecord-&lt;version&gt;.gem</code>
+</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/5">
+<p>activerecord &#x306E; lib &#x4EE5;&#x4E0B;&#x3092;&#x898B;&#x3066;&#x307F;&#x308B;&#x304C;&#x3001;(&#x5F53;&#x7136;) title &#x3089;&#x3057;&#x304D;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x306F;&#x307F;&#x3064;&#x304B;&#x3089;&#x306A;&#x3044;&#x3002;</p>
+
+<p>&#x3068;&#x3053;&#x308D;&#x304C;&#x3001;lib/activerecord/base.rb &#x3092;&#x4E0B;&#x306E;&#x65B9;&#x307E;&#x3067;&#x898B;&#x3066;&#x3044;&#x304F;&#x3068;...</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/6">
+<pre class="sh_ruby"><code># lib/activerecord/base.rb
+....
+include ActiveRecord::Persistence
+extend ActiveModel::Naming
+extend QueryCache::ClassMethods
+extend ActiveSupport::Benchmarkable
+....</code></pre>
+
+<p>&#x3066;&#x306A;&#x304B;&#x3093;&#x3058;&#x306E; &#x5927;&#x91CF;&#x306E; <code>include</code> &#x3068; <code>extend</code> &#x304C;!!</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="one/01_slide/7">
+<h2>include &#x3068; extend</h2>
+
+<p>&#x53C2;&#x8003;: <a href="http://rubyist.g.hatena.ne.jp/yamaz/20060722">yamaz&#x306E;Rails&#x65E5;&#x8A18;</a></p>
+
+<p>&#x3056;&#x3063;&#x304F;&#x308A;&#x8A00;&#x3046;&#x3068;</p>
+
+<p>include &#x3068; extend &#x306B;&#x3088;&#x308A; "module" &#x3067;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x305F;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3092;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306B;&#x8FFD;&#x52A0;&#x3067;&#x304D;&#x308B;&#x3002;</p>
+
+<p>extend &#x306F;&#x30AF;&#x30E9;&#x30B9;&#x30E1;&#x30C3;&#x30BD;&#x30C9;&#x3068;&#x3057;&#x3066;&#x3001;include &#x306F;&#x901A;&#x5E38;&#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3068;&#x3057;&#x3066;&#x3001;&#x8FFD;&#x52A0;&#x3059;&#x308B;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/8">
+<p>include&#x3092;&#x3057;&#x3089;&#x307F;&#x3064;&#x3076;&#x3057;&#x306B;&#x307F;&#x3066;&#x3044;&#x304F;&#x3068;</p>
+
+<pre class="sh_ruby"><code>include AttributeMethods</code></pre>
+
+<p>&#x304C;&#x3042;&#x3084;&#x3057;&#x3044;&#x3002;&#x3002;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="one/01_slide/9">
+<h2>method_missing</h2>
+
+<p>&#x53C2;&#x8003;: <a href="http://ref.xaio.jp/ruby/method_missing">Ruby&#x30EA;&#x30D5;&#x30A1;&#x30EA;&#x30F3;&#x30B9;</a></p>
+
+<p>&#x3042;&#x308B;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306B;<code>method_missing</code>&#x3068;&#x3044;&#x3046;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x304C;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+
+<p>&#x3053;&#x306E;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306B;&#x5BFE;&#x3057;&#x3066;&#x3001;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x3066;&#x3044;&#x306A;&#x3044;&#x30E1;&#x30BD;&#x30C3;&#x30C9; <code>methodA</code> &#x3092;&#x547C;&#x3073;&#x51FA;&#x3057;&#x305F;&#x3068;&#x304D;&#x3001;method_missing &#x304C;&#x547C;&#x3073;&#x51FA;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;
+&#x7B2C;1&#x5F15;&#x6570;&#x306B;&#x672C;&#x6765;&#x547C;&#x3073;&#x51FA;&#x305D;&#x3046;&#x3068;&#x3057;&#x3044;&#x305F;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x540D;&#x3001;&#x7B2C;2&#x5F15;&#x6570;&#x306B;&#x305D;&#x306E;&#x3068;&#x304D;&#x306E;&#x5F15;&#x6570;&#x304C;&#x6E21;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/10">
+<p>&#x3055;&#x3066;&#x3001;lib/activerecord/attribute_methods.rb &#x3092;&#x898B;&#x3066;&#x307F;&#x308B;&#x3068;&#x3001;138&#x884C;&#x76EE;&#x306B; method_missing &#x304C;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+
+<pre class="sh_ruby"><code># module ActiveRecord::AttributeMethods
+def method_missing(method, *args, &amp;block)
+  unless self.class.attribute_methods_generated?
+    self.class.define_attribute_methods
+
+    if respond_to_without_attributes?(method)
+      send(method, *args, &amp;block)
+    else
+      super
+    end
+  else
+    super
+  end
+end</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/11">
+<p><code>self.class.define_attributes_methods</code>&#x306B;&#x6CE8;&#x76EE;&#x3002;</p>
+
+<p>&#x3053;&#x306E;&#x5834;&#x5408;&#x3001;AttributeMethod &#x3092; include &#x3057;&#x3066;&#x3044;&#x308B;&#x306E;&#x306F; ActiveRecord::Base&#x3002;</p>
+
+<p>&#x3057;&#x305F;&#x304C;&#x3063;&#x3066;&#x3001;<code>self</code> &#x306F; ActiveRecord (&#x306E;&#x6D3E;&#x751F;&#x30AF;&#x30E9;&#x30B9;) &#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3002;</p>
+
+<p><code>self.class</code> &#x306F; ActiveRecord (&#x306E;&#x6D3E;&#x751F;&#x30AF;&#x30E9;&#x30B9;) &#x81EA;&#x8EAB;&#x3002;</p>
+
+<p>&#x3057;&#x305F;&#x304C;&#x3063;&#x3066;&#x3001;<code>self.class.define_attributes_method</code> &#x306F;ActiveRecord (&#x306E;&#x6D3E;&#x751F;&#x30AF;&#x30E9;&#x30B9;) &#x306E;&#x7279;&#x7570;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/12">
+<p><code>define_attributes_method</code> &#x3092;&#x63A2;&#x3057;&#x3066;&#x3044;&#x304F;&#x3068;</p>
+
+<p>&#x540C;&#x3058;&#x30D5;&#x30A1;&#x30A4;&#x30EB;(lib/activerecord/attribute_methods.rb) &#x306E;38&#x884C;&#x76EE;&#x306B;&#x767A;&#x898B;&#x3002;</p>
+
+<pre class="sh_ruby"><code>ActiveRecord::AttributeMethods::ClassMethods#define_attributes_method</code></pre>
+
+<p>&#x3068;&#x3053;&#x308D;&#x304C;&#x3001;<code>define_attributes_method</code> &#x306F;&#x30B5;&#x30D6;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB; ClassMethod &#x306E;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x306A;&#x306E;&#x3067;&#x3001;&#x76F4;&#x63A5;&#x306F;&#x30A4;&#x30F3;&#x30AF;&#x30EB;&#x30FC;&#x30C9;&#x3055;&#x308C;&#x306A;&#x3044;&#x306F;&#x305A;...</p>
+
+<p>&#x3068;&#x601D;&#x3063;&#x3066;&#x305F;&#x3089;&#x3001;&#x3053;&#x3093;&#x306A;&#x30DA;&#x30FC;&#x30B8;&#x3092;&#x767A;&#x898B;: <a href="http://d.hatena.ne.jp/kitokitoki/20110301/p1">http://d.hatena.ne.jp/kitokitoki/20110301/p1</a></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="one/01_slide/13">
+<h2>ClassMethods</h2>
+
+<p><a href="http://api.rubyonrails.org/classes/ActiveSupport/Concern.html">Ruby on Rails Documentation</a></p>
+
+<p>&#x901A;&#x5E38;&#x3001;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x3092; include &#x3057;&#x3066;&#x3082;&#x3001;&#x8FFD;&#x52A0;&#x3067;&#x304D;&#x308B;&#x306E;&#x306F;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3060;&#x3051;&#x3067;&#x3059;&#x3002;</p>
+
+<p>&#x3068;&#x3053;&#x308D;&#x304C;&#x3001;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x306E;&#x5B9A;&#x7FA9;&#x306B;&#x304A;&#x3044;&#x3066; <code>ActiveSupport::Concern</code> &#x3092; extend &#x3057;&#x3001;&#x66F4;&#x306B;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB; <code>ClassMethods</code> &#x3092;
+&#x5B9A;&#x7FA9;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x3001; <code>ClassMethods</code> &#x5185;&#x306B;&#x304A;&#x3044;&#x3066;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3092;&#x30AF;&#x30E9;&#x30B9;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3068;&#x3057;&#x3066;&#x8FFD;&#x52A0;&#x3067;&#x304D;&#x308B;&#x3088;&#x3046;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/14">
+<p>&#x3068;&#x3044;&#x3046;&#x308F;&#x3051;&#x3067;&#x3001;<code>ActiveRecord::AttributeMethods::ClassMethods</code><br/>
+<code>#define_attributes_method</code> &#x306E;&#x5B9A;&#x7FA9;&#x3092;&#x898B;&#x3066;&#x3044;&#x304F;&#x3002;</p>
+
+<p>&#x5927;&#x4E8B;&#x306A;&#x306E;&#x306F;&#x3053;&#x306E;&#x8FBA;:</p>
+
+<pre class="sh_ruby"><code>    @attribute_methods_mutex.synchronize do
+      return if attribute_methods_generated?
+      superclass.define_attribute_methods unless self == base_class
+      super(column_names)
+      @attribute_methods_generated = true
+    end</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/15">
+<p>&#x307E;&#x305A;&#x306F;&#x3001;base_class&#x306E;&#x5B9A;&#x7FA9;&#x3092;&#x63A2;&#x3057;&#x3066;&#x307F;&#x308B;&#x3002;</p>
+
+<pre class="sh_ruby"><code># base.rb:696
+    include Inheritance
+
+# inheritance.rb:42
+# ActiveRecord::Inheritance::ClassMethods
+  def base_class
+    class_of_active_record_descendant(self)
+  end
+
+# inheritance.rb:86
+  def class_of_active_record_descendant(klass)
+    if klass == Base || klass.superclass == Base || klass.superclass.abstract_class?
+      klass
+    elsif klass.superclass.nil?
+      raise ActiveRecordError, "#{name} doesn't belong in a hierarchy descending from ActiveRecord"
+    else
+      class_of_active_record_descendant(klass.superclass)
+    end
+  end</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="one/01_slide/16">
+<h2>super</h2>
+
+<p><a href="http://doc.ruby-lang.org/ja/1.9.2/doc/spec=2fcall.html">Ruby&#x30EA;&#x30D5;&#x30A1;&#x30EC;&#x30F3;&#x30B9;&#x30DE;&#x30CB;&#x30E5;&#x30A2;&#x30EB;</a></p>
+
+<p>&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x306E;&#x5B9A;&#x7FA9;&#x5185;&#x3067; super &#x304C;&#x547C;&#x3070;&#x308C;&#x308B;&#x3068;&#x3001;&#x305D;&#x306E;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x304C;&#x4E0A;&#x66F8;&#x304D;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x3066;&#x3044;&#x308B;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3092;&#x547C;&#x3073;&#x51FA;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/17">
+<p>&#x3082;&#x3046;1&#x5EA6; attribute_methods.rb &#x3092;&#x898B;&#x3066;&#x3044;&#x304F;&#x3068;</p>
+
+<pre class="sh_ruby"><code>module ClassMethods
+  def define_attribute_methods</code></pre>
+
+<p>&#x306E;&#x3061;&#x3087;&#x3063;&#x3068;&#x524D;&#x306B;&#x3053;&#x3093;&#x306A;&#x8A18;&#x8FF0;&#x304C;...</p>
+
+<pre class="sh_ruby"><code>include ActiveModel::AttributeMethods</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/18">
+<p>ActiveModel &#x306E;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x3068;&#x3063;&#x3066;&#x304D;&#x3066;&#x4E2D;&#x3092;&#x898B;&#x3066;&#x307F;&#x308B;&#x3068;&#x3001;</p>
+
+<p>activemodel-3.2.3/lib/active_model/attribute_methods.rb &#x306E;255&#x884C;&#x76EE;&#x306B; <code>define_attribute_methods</code> &#x306E;&#x5B9A;&#x7FA9;&#x767A;&#x898B;&#x3002;</p>
+
+<pre class="sh_ruby"><code># ActiveRecord::AttributeMethods::ClassMethods#define_attributes_method
+  def define_attribute_methods(attr_names)
+    attr_names.each { |attr_name| define_attribute_method(attr_name) }
+  end</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/19">
+<pre class="sh_ruby"><code>  def define_attribute_method(attr_name)
+    attribute_method_matchers.each do |matcher|
+      method_name = matcher.method_name(attr_name)
+      unless instance_method_already_implemented?(method_name)
+        generate_method = "define_method_#{matcher.method_missing_target}"
+
+        if respond_to?(generate_method, true)
+          send(generate_method, attr_name)
+        else
+          define_optimized_call generated_attribute_methods, method_name, matcher.method_missing_target, attr_name.to_s
+        end
+      end
+    end
+    attribute_method_matchers_cache.clear
+  end</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/20">
+<p>&#x4EE5;&#x4E0B;&#x3001;&#x7D20;&#x76F4;&#x306B;&#x8FFD;&#x3063;&#x3066;&#x3044;&#x304F;&#x3068;&#x3001;<code>ActiveRecord::MethodAttributes</code> &#x306E;&#x5B9A;&#x7FA9;&#x5185;&#x306E;</p>
+
+<pre class="sh_ruby"><code>included do
+  include Read
+  include Write
+  include Query
+  include TimeZoneConversion</code></pre>
+
+<p>&#x304C;&#x809D;&#x3067;&#x3042;&#x308B;&#x3053;&#x3068;&#x304C;&#x308F;&#x304B;&#x308B;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/21">
+<p>&#x4F8B;&#x3048;&#x3070;&#x3001;lib/activerecord/method_attributes/read.rb &#x3092;&#x898B;&#x3066;&#x307F;&#x308B;&#x3068;&#x3001;</p>
+
+<pre class="sh_ruby"><code>      def define_method_attribute(attr_name)
+        cast_code = attribute_cast_code(attr_name)
+
+        generated_attribute_methods.module_eval &lt;&lt;-STR, __FILE__, __LINE__ + 1
+          def __temp__
+            #{internal_attribute_access_code(attr_name, cast_code)}
+          end
+          alias_method '#{attr_name}', :__temp__
+          undef_method :__temp__
+        STR
+
+        generated_external_attribute_methods.module_eval &lt;&lt;-STR, __FILE__, __LINE__ + 1
+          def __temp__(v, attributes, attributes_cache, attr_name)
+            #{external_attribute_access_code(attr_name, cast_code)}
+          end
+          alias_method '#{attr_name}', :__temp__
+          undef_method :__temp__
+        STR
+      end</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/22">
+<p><code>attribute_cast_code</code> &#x306F; &#x300C;attr_name &#x306B;&#x76F8;&#x5F53;&#x3059;&#x308B;&#x30C7;&#x30FC;&#x30BF;&#x30D9;&#x30FC;&#x30B9;&#x306E;&#x30B3;&#x30E9;&#x30E0;&#x304B;&#x3089;&#x30C7;&#x30FC;&#x30BF;&#x3092;&#x3068;&#x308A;&#x3060;&#x3057;&#x3001;&#x9069;&#x5F53;&#x306A;&#x578B;&#x306B;&#x5909;&#x63DB;&#x3059;&#x308B;&#x305F;&#x3081;&#x306E;<strong>&#x30B3;&#x30FC;&#x30C9;</strong>&#x300D;&#x3092;&#x8FD4;&#x3059;&#x3002;</p>
+
+<pre class="sh_ruby"><code>    case type
+    when :string, :text        then var_name
+    when :integer              then "(#{var_name}.to_i rescue #{var_name} ? 1 : 0)"
+    when :float                then "#{var_name}.to_f"
+    ....</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/23">
+<p><code>generated_attribute_methods</code> &#x306F;<strong>&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;</strong>&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3002;&#x3053;&#x306E;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x306E;&#x4E2D;&#x306B;&#x3001;&#x5404;attribute&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x305F;&#x3081;&#x306E;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3092;&#x5B9A;&#x7FA9;&#x3059;&#x308B;</p>
+
+<pre class="sh_ruby"><code># activemodel/lib/active-model/attribute_methods.rb:285
+  def generated_attribute_methods #:nodoc:
+    @generated_attribute_methods ||= begin
+      mod = Module.new
+      include mod
+      mod
+    end
+  end</code></pre>
+
+<p>&#x5373;&#x5EA7;&#x306B; include &#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x306E;&#x3067;&#x3001;&#x3053;&#x306E;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x306E;&#x4E2D;&#x306B;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x305F;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3082;&#x666E;&#x901A;&#x306E;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3068;&#x540C;&#x69D8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3067;&#x304D;&#x308B;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/24">
+<p><code>internal_attribute_access_code</code> &#x306F;&#x5B9F;&#x969B;&#x306B;&#x5B9A;&#x7FA9;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x3066;&#x3044;&#x308B;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x306E;&#x4E2D;&#x8EAB;&#x3092;&#x8A18;&#x8FF0;&#x3059;&#x308B;<strong>&#x30B3;&#x30FC;&#x30C9;</strong>&#x3092;&#x8FD4;&#x3057;&#x3059;&#x3002;</p>
+
+<p>activerecord/lib/active_record/attribute_methods/read.rb:94 &#x3067;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+
+<p>&#x4F8B;&#x3048;&#x3070;&#x6B21;&#x306E;&#x3088;&#x3046;&#x306A;&#x6587;&#x5B57;&#x5217;&#x3092;&#x8FD4;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+
+<pre><code>attr_name = '#{attr_name}';
+@attributes_cache[attr_name] ||=
+  ((v=@attributes[attr_name]) &amp;&amp; (v.to_i rescue #{var_name} ? 1 : 0)
+</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/25">
+<p><code>generated_external_attribute_methods</code> &#x306F; <code>generated_attribute_methods</code> &#x3068;&#x540C;&#x69D8;&#x3001;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x3067;&#x3059;&#x3002;</p>
+
+<p>&#x3057;&#x304B;&#x3057;&#x3001;<code>generated_external_attribute_methods</code> &#x306F;&#x30D1;&#x30D6;&#x30EA;&#x30C3;&#x30AF;&#x30E1;&#x30C3;&#x30BD;&#x30C9;&#x3068;&#x3057;&#x3066;&#x5B9A;&#x7FA9;&#x3055;&#x308C;&#x3066;&#x304A;&#x308A;&#x3001;ActiveRecord&#x5185;&#x304B;&#x3089;&#x4F7F;&#x308F;&#x308C;&#x308B;&#x3053;&#x3068;&#x306F;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="one/01_slide/26">
+<h2>class_eval, module_eval</h2>
+
+<p><a href="http://doc.ruby-lang.org/ja/1.9.2/class/Module.html">Ruby &#x30EA;&#x30D5;&#x30A1;&#x30EC;&#x30F3;&#x30B9;&#x30DE;&#x30CB;&#x30E5;&#x30A2;&#x30EB;</a></p>
+
+<p><code>Module#module_eval</code>, <code>Module#class_eval</code> &#x306F;&#x3001;&#x6587;&#x5B57;&#x5217;&#x3092;&#x53D7;&#x3051;&#x53D6;&#x308A;&#x3001;&#x305D;&#x306E;&#x6587;&#x5B57;&#x5217;&#x304C;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;/&#x30AF;&#x30E9;&#x30B9;&#x306E;&#x5B9A;&#x7FA9;&#x6587;&#x4E2D;&#x306B;&#x3042;&#x308B;&#x3082;&#x306E;&#x3068;&#x307F;&#x306A;&#x3057;&#x3066;&#x3001;
+&#x305D;&#x306E;&#x6587;&#x5B57;&#x5217;&#x3092;&#x89E3;&#x91C8;&#x30FB;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3002;</p>
+
+<p>&#x305F;&#x3060;&#x3057;&#x3001;&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x5909;&#x6570;&#x3060;&#x3051;&#x306F; <code>module_eval</code> &#x304C;&#x547C;&#x3070;&#x308C;&#x305F;&#x5834;&#x6240;&#x3067;&#x8A55;&#x4FA1;&#x3055;&#x308C;&#x308B;&#x3002;</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="one/01_slide/27">
+<p>&#x3068;&#x3044;&#x3046;&#x308F;&#x3051;&#x3067;&#x3001;&#x81EA;&#x5206;&#x3067;&#x5B9A;&#x7FA9;&#x3057;&#x3066;&#x306A;&#x3044;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x304C;&#x547C;&#x3079;&#x308B;&#x306E;&#x306F; <code>module_eval</code> &#x306E;&#x304A;&#x304B;&#x3052;&#x3067;&#x3057;&#x305F;!!</p>
+
+<p><code>method_missing</code> &#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x3001;&#x305D;&#x306E;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x304C;&#x521D;&#x3081;&#x3066;&#x547C;&#x3070;&#x308C;&#x305F;&#x30BF;&#x30A4;&#x30DF;&#x30F3;&#x30B0;&#x3067;&#x5B9A;&#x7FA9;&#x3057;&#x3066;&#x3044;&#x308B;&#x3068;&#x3044;&#x3046;&#x308F;&#x3051;&#x3067;&#x3057;&#x305F;&#x3002;</p>
+</div>
+</div></div>
+
+</body>
+</html>

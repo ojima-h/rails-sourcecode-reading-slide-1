@@ -1,0 +1,14 @@
+pre {
+    border: solid 1px skyblue;
+    border-radius: 10px;
+}
+
+pre > code {
+    line-height: 0.5;
+    font-size: 50%;
+}
+
+pre > code > code.command {
+    line-height: 0.5;
+    font-size: 200%;
+}
